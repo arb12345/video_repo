@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Vice On Twitter</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+   </head>
+   <body>
+      <div class="container">
+         <div class="page-header">
+            <h1>Vice (Video Instructional Chess Engine)
+               <small>Playing as a Twitter bot on a Raspberry Pi</small>
+            </h1>
+            <a href="https://twitter.com/ChessVice?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @ChessVice</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+         </div>
+         <p>VICE is a simple chess program made in C, detailed in nearly 100 videos on YouTube. You can see the details <a href="http://www.bluefever.net/Downloads/ViceReadMe.html" target="_blank" >here</a></p>
+         <p>As a nice little side project, VICE now plays in 'correspondence style' via Twitter! (I hope)
+         <p/>
+         <p>It's running on a Raspberry Pi 2
+         <p/>
+         <p>It's in very early stages of development - in other words, it's been tested just by me, so expect odd things to happen now and again.</p>
+         <p>
+            Feel free to DM me at the Twitter Handle 
+            <a href="https://twitter.com/BluefeverSoft?ref_src=twsrc%5Etfw" class="twitter-follow-button" data-show-count="false">Follow @BluefeverSoft</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> or email <a href="mailto:ViceChess@Yahoo.com" target="_top">ViceChess@Yahoo.com</a>
+         </p>
+         <p>Important - the first message from a new source (you) has to be manually accepted - the Twitter API doesn't seem to have this (as far as I can tell). So there could be a wait to get a reply when you first ever send Vice a message.</p>
+         <div class="page-header">
+            <h2>How it works</h2>
+         </div>
+         <p>You can play games with Vice using Messaging on Twitter - you send it commands / moves, and it (hopfully) replies.</p>
+         <div class="page-header">
+            <h3>The commands:</h3>
+         </div>
+         <div class="panel panel-primary">
+            <div class="panel-heading">new game</div>
+            <div class="panel-body">This will start a new game between you and Vice. Colour chosen randomly. If you are in a game, Vice should tell you and send you the board</div>
+         </div>
+         <div class="panel panel-primary">
+            <div class="panel-heading">status</div>
+            <div class="panel-body">Vice will send you info on the current game you are playing, if you are. if not, it will let you know.</div>
+         </div>
+         <div class="panel panel-primary">
+            <div class="panel-heading">resign</div>
+            <div class="panel-body">Resign the current game. Make a little chess engine happy.</div>
+         </div>
+         <div class="panel panel-primary">
+            <div class="panel-heading">move xxxx</div>
+            <div class="panel-body">
+               <p>Make a move - it MUST be in the form e7e8q - e7 is the from square, e8 the to sqaure, and in the case of a promotion, q = queen, n = knight, r = rook, b = bishop.</p>
+               <p>For Example:</p>
+               <ul>
+                  <li>start of the game, move the e pawn two sqaures <i>@ChessVice move e2e4</i></li>
+                  <li>Castle kingside white - <i>@ChessVice move e1g1</i></li>
+                  <li>promote a pawn to a bishop (as black) - <i>@ChessVice move b2b1b</i></li>
+               </ul>
+            </div>
+         </div>
+         <div class="page-header">
+            <h3>Illegal Moves</h3>
+         </div>
+         <p>If Vice doesn't understand your move, it will let you know</p>
+         <div class="page-header">
+            <h3>End of game</h3>
+         </div>
+         <p>Vice **should** correctly adjudicate draws, mates, fifty move draws, low material draws and stalemates</p>
+         <div class="page-header">
+            <h3>Processing Commands</h3>
+         </div>
+         <p>Vice will process the command, BUT NOT ALWAYS INSTANTLY - but usually within 30 minutes or so. Any more than that and it means it's overloaded, or broken. The former would be nice, the latter a high probability</p>
+         <p>Why is this? Well, it loads tweets at regular intervals - usually every 10 minutes or so. It then looks at the moves, thinks about them, and sends the reply. Better would be to get tweets <b>as they are sent</b> - and indeed, there is a streaming API from Twitter that does just this. Vice works with the streaming API, but I need to refine it still so it doesn't block (in the case of many moves - again a nice problem to have). Streaming will come in the near future.</p>
+         <p>Here's a view from a game in progress..</p>
+         <img src="messages.png"></img>
+        <!--  <div class="page-header">
+            <h3>What is the [Code: xxxx] at the end of tweets from Vice? (important!!)</h3>
+         </div>
+         <p>Twitter doesn't allow repeat tweets within a certain timeframe (or other rule, I can't figure it out). This can cause issues, for example, if you send new game, resign a few hours later, and send new game again, you might be told by twitter you can't. The same applies to vice - it might send you e2e4 as a move, and then the next game the same. And the tweet wouldn't work, due to a repeat</p>
+         <p>So, as a complete hack, I add a random number onto the end of each tweet, to avoid the duplication issue. This might break a rule, but I'm sure someone will be in touch if it does! (and it's not as if I'm abusing the twitter data api or something)</p> -->
+         <div class="page-header">
+            <h3>Final Word</h3>
+         </div>
+         <p>This is a hobby, for enjoyment. Don't get too mad if things break. </p>
+         <div class="page-header">
+            <h3>You Tube</h3>
+         </div>
+         <p>A lot of people seemed to like the series I did on making Vice, so I might try and do the same for this app. We'll see.</p>
+         <div class="page-header">
+            <h3>Brief 'How Does It Work'</h3>
+         </div>
+         <p>The bot consists of:</p>
+         <ul style="margin-bottom: 80px;" >
+            <li>
+               Some python(3) modules for:
+               <ul>
+                  <li>The twitter API (using twython)</li>
+                  <li>Refereeing the game (understanding moves, game state)</li>
+                  <li>Starting the thinking engine process (which is a separate program) and communicating using Pipes</li>
+                  <li>Drawing images of the board</li>
+                  <li>Reading and writing from a MySQL database</li>
+                  <li>Sending me emails to let me know what's going on when I'm not looking</li>
+               </ul>
+            </li>
+            <li>A MySql database to keep track of game state and processed tweets</li>
+            <li>The Vice engine itself, written in C</li>
+            <li>A headless Raspberry Pi with Raspbian Lite</li>
+         </ul>
+         <div class="container-fluid">
+            <footer>&copy; Copyright 2018, Richard Allbert</footer>
+         </div>
+      </div>
+   </body>
+</html>
